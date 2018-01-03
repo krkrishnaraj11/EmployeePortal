@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an application for employees in a company.
 
-Things you may want to cover:
+This app stores data about employees and employees can edit some of them.
 
-* Ruby version
+The admin can create, edit, delete and view the data about employees.
 
-* System dependencies
+Employees can login to the application to view and edit the data.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Editing for employees is limited, but admin has more access to it.
