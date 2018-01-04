@@ -1,4 +1,6 @@
 class EmpSessionsController < ApplicationController
+
+  before_action :logged_in_employee, only: [:show]
   def new
     
   end
@@ -7,7 +9,8 @@ class EmpSessionsController < ApplicationController
     employee = Employee.find_by(username: params[:session][:username])
     if employee && employee.authenticate(params[:session][:password])
       log_in employee
-      flash[:success] = 'Success'
+      params[:session][:remember_me] == '1' ? remember(employee) : forget(employee)
+      flash[:success] = 'Login Successful'
       redirect_to employeeportal_dashboard_path  
     else
       flash.now[:danger] = 'Invalid username/password combination' 
@@ -16,12 +19,12 @@ class EmpSessionsController < ApplicationController
   end
 
   def show
-    
+    @employee = current_employee 
   end
 
   def destroy
-    log_out
-    redirect_to root_url
+    log_out if logged_in?
+    redirect_to employeeportal_login_path
   end
 
 end

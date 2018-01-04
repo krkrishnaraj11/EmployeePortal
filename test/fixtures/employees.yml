@@ -15,6 +15,21 @@ employee:
   admin: false
   password_digest: <%= Employee.digest('Ha66y@Air') %>
 
+employee1:
+  name: Nikhil
+  gender: Male
+  designation: MyString
+  phone: 8592817580
+  email: nikhildanand1@gmail.com
+  date_of_join: 2018-01-04
+  address: Sajith Nivas, Karumalloor P.O Thattampady, Aluva, Ernakulam
+  active: true
+  username: nikhildanand2@gmail.com
+  personal_email: nikhildanand008@yahoomail.com
+  date_of_birth: 2018-02-03
+  admin: false
+  password_digest: <%= Employee.digest('Ha66y@Air') %>
+
 admin:
   name: Hari Shankar
   gender: Male

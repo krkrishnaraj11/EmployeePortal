@@ -88,7 +88,7 @@ class EmployeeTest < ActiveSupport::TestCase
   end
 
   test "email validation should accept valid addresses" do
-    valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
+    valid_addresses = %w[employee@example.com employee@foo.COM A_US-ER@foo.bar.org
                         first.last@foo.jp alice+bob@baz.cn]
     valid_addresses.each do |valid_address|
       @employee.email = valid_address
@@ -97,7 +97,7 @@ class EmployeeTest < ActiveSupport::TestCase
   end
 
   test "email validation should reject invalid addresses" do
-    invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
+    invalid_addresses = %w[employee@example,com employee_at_foo.org employee.name@example.
                         foo@bar..com    foo@bar_baz.com foo@bar+baz.com]
     invalid_addresses.each do |invalid_address|
       @employee.email = invalid_address
@@ -143,7 +143,7 @@ class EmployeeTest < ActiveSupport::TestCase
   end
 
   test "personal email validation should accept valid addresses" do
-    valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
+    valid_addresses = %w[employee@example.com employee@foo.COM A_US-ER@foo.bar.org
                         first.last@foo.jp alice+bob@baz.cn]
     valid_addresses.each do |valid_address|
       @employee.personal_email = valid_address
@@ -152,7 +152,7 @@ class EmployeeTest < ActiveSupport::TestCase
   end
 
   test "personal email validation should reject invalid addresses" do
-    invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
+    invalid_addresses = %w[employee@example,com employee_at_foo.org employee.name@example.
                         foo@bar..com    foo@bar_baz.com foo@bar+baz.com]
     invalid_addresses.each do |invalid_address|
       @employee.personal_email = invalid_address
@@ -217,4 +217,9 @@ class EmployeeTest < ActiveSupport::TestCase
       assert @employee.valid?, "#{valid.inspect} should be valid"      
     end
   end
+
+  test "authenticated? should return false for a employee with nil digest" do
+    assert_not @employee.authenticated?('')
+  end
+
 end
