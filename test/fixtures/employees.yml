@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+employee:
+  name: Nikhil D Anand
+  gender: Male
+  designation: MyString
+  phone: 8592817590
+  email: nikhildanand@gmail.com
+  date_of_join: 2018-01-03
+  address: Sajith Nivas, Karumalloor P.O Thattampady, Aluva, Ernakulam
+  active: false
+  username: nikhildanand@gmail.com
+  personal_email: nikhildanand007@yahoomail.com
+  date_of_birth: 2018-01-03
+  admin: false
+  password_digest: <%= Employee.digest('Ha66y@Air') %>
+
+admin:
+  name: Hari Shankar
+  gender: Male
+  designation: MyString
+  phone: 8592817589
+  email: nikhildanand007@gmail.com
+  date_of_join: 2018-01-03
+  address: Sajith Nivas, Karumalloor P.O Thattampady, Aluva, Ernakulam
+  active: true
+  username: admin
+  personal_email: nikhildanand007@ymail.com
+  date_of_birth: 2018-01-03
+  admin: true
+  password_digest: <%= Employee.digest('Ha66y@Air') %>
