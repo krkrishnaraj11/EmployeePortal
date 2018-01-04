@@ -1,0 +1,40 @@
+<% provide(:name, "admin") %>
+
+<div class="container">
+    <table class="table table-dark table-striped table-bordered table-hover">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Active</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <% @employee.each do |employee| %>
+            <% unless employee.admin %>
+                <tr>
+                    <td>
+                        <%= link_to employee.name, "#" %>
+                    </td>
+                    <td>
+                        <%= employee.email%>
+                    </td>
+                    <td>
+                        <%= employee.phone%>
+                    </td>
+                    <td>
+                        <%= employee.active == true ? "Yes" : "No" %>
+                    </td>
+                    <td>
+                        <%= link_to "Edit", "#" %>
+                    </td>
+                    <td>
+                        <%= link_to "Delete", "#" %>
+
+                    </td>
+                </tr>
+            <% end %>
+        <% end %>
+    </table>
+    <%= link_to "Add Employee", "#" , class: "btn btn-primary btn-sm " %>
+</div>

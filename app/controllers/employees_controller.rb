@@ -1,5 +1,7 @@
 class EmployeesController < ApplicationController
-  before_action :logged_in_employee, only: [:edit, :update]
+  before_action :logged_in_employee, only: [:edit]
+  before_action :logged_in_admin, only: [:admindashboard, :employeedetails, :addemployee, :employeetable, :projects]
+
   def new
     redirect_to employeeportal_login_path
   end
@@ -35,9 +37,13 @@ class EmployeesController < ApplicationController
   end
 
   def employeetable
+    @employee = Employee.all
+  end
+
+  def projects
 
   end
-  
+
   private
 
   def employee_params

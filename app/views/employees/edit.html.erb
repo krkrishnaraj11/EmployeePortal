@@ -7,15 +7,14 @@
 
         <%= form_for(@employee, url: employeeportal_path(:id => @employee.id), method: :patch) do |f| %>
             <%= render 'shared/error_messages', object: @employee %>
-            <div class="c">
-                <div class="grid formgroup">
+            <div>
+                <div>
 
                     <div>
                         <%= f.label :id %>
                             :
                     
                         <%= f.text_field :id, :value => ("RP_#{@employee.id}"), :disabled => true, class: "form-control" %>
-                            <span class="underline"></span>
                     </div>
 
                     <div>
@@ -23,7 +22,6 @@
                             :
                     
                         <%= f.text_field :name, :disabled => true, class: "form-control" %>
-                            <span class="underline"></span>
                     </div>
 
 
@@ -32,7 +30,6 @@
                             :
                     
                         <%= f.text_field :gender, :disabled => true, class: "form-control" %>
-                            <span class="underline"></span>
                     </div>                    
                     
                     <div>
@@ -40,49 +37,42 @@
                             :
                     
                         <%= f.text_field :designation, :disabled => true, class: "form-control" %>
-                            <span class="underline"></span>
                     </div>
                     <div>
                         <%= f.label :phone %>
                             <sup>*</sup>:
                     
                         <%= f.text_field :phone, class: "form-control" %>
-                            <span class="underline"></span>
                     </div>
                     <div>
                         <%= f.label :email %>
                             :
                     
                         <%= f.email_field :email, :disabled => true, class: "form-control" %>
-                            <span class="underline"></span>
                     </div>
                     <div>
                         <%= f.label :personal_email %>
                             <sup>*</sup>:
                     
                         <%= f.email_field :personal_email, class: "form-control" %>
-                            <span class="underline"></span>
                     </div>
                     <div>
                         <%= f.label :date_of_join %>
                             :
                     
                         <%= f.date_field :date_of_join, :disabled => true, class: "form-control" %>
-                            <span class="underline"></span>
                     </div>
                     <div>
                         <%= f.label :date_of_birth %>
                             :
                     
                         <%= f.date_field :date_of_birth, :disabled => true, class: "form-control" %>
-                            <span class="underline"></span>
                     </div>
                     <div>
                         <%= f.label :address %>
                             <sup>*</sup>:
                     
                         <%= f.text_area :address, class: "form-control" %>
-                            <span class="underline"></span>
                     </div>
                     <div>
                         <%= f.label :active %>
@@ -95,7 +85,6 @@
                             :
                     
                         <%= f.text_field :username, :disabled => true, class: "form-control" %>
-                            <span class="underline"></span>
                     </div>
                 </div>
                 <br />

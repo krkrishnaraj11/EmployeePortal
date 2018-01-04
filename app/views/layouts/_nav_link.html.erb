@@ -12,5 +12,19 @@
         <li>
             <%= link_to "Log Out", employeeportal_logout_path, method: :delete %>
         </li>
+
+    <% elsif yield(:name) == "admin" %>
+        <li class= <%= ( url == admin_dashboard_path ) ? "active" : "" %> >
+            <%= link_to "Home",  admin_dashboard_path %>
+        </li>
+        <li class= <%= ( url == admin_employee_path || url == admin_addemployee_path || url == admin_employeedetails_path ) ? "active" : "" %> >
+            <%= link_to "Employee",  admin_employee_path %>
+        </li>
+        <li class= <%= ( url == admin_projects_path ) ? "active" : "" %> >
+            <%= link_to "Projects",  admin_projects_path %>
+        </li>
+        <li>
+            <%= link_to "Log Out", admin_logout_path, method: :delete %>
+        </li>
     <% end %>
 </ul>

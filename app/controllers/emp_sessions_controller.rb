@@ -10,8 +10,16 @@ class EmpSessionsController < ApplicationController
     if employee && employee.authenticate(params[:session][:password])
       log_in employee
       params[:session][:remember_me] == '1' ? remember(employee) : forget(employee)
-      flash[:success] = 'Login Successful'
-      redirect_to employeeportal_dashboard_path  
+      if !employee.admin && request.original_fullpath == employeeportal_login_path
+        flash[:success] = 'Login Successful'
+        redirect_to employeeportal_dashboard_path
+      elsif employee.admin && request.original_fullpath == admin_login_path
+        flash[:success] = 'Login Successful'
+        redirect_to admin_dashboard_path 
+      else
+        flash.now[:danger] = 'Invalid username/password combination'
+        render 'new'
+      end
     else
       flash.now[:danger] = 'Invalid username/password combination' 
       render 'new'

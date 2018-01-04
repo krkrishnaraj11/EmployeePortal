@@ -9,10 +9,14 @@ Rails.application.routes.draw do
   patch '/employeeportal', to: 'employees#update'
 
   get '/admin/login', to: 'employees#adminlogin'
+  post '/admin/login', to: 'emp_sessions#create'
+  delete '/admin/logout', to: 'emp_sessions#destroy'
+
   get '/admin/dashboard', to: 'employees#admindashboard'
   get '/admin/employee', to: 'employees#employeetable'
   get '/admin/addemployee', to: 'employees#addemployee'
   get '/admin/employeedetails', to: 'employees#employeedetails'
+  get '/admin/projects', to: 'employees#projects'
 
   root 'employees#new'
 end

@@ -46,7 +46,15 @@ module EmpSessionsHelper
     # Confirms a logged-in employee.
     def logged_in_employee
         if (current_employee.admin || !logged_in?)
-            flash[:danger] = "Please log in as employee to access this page."
+            flash[:danger] = "Please log in to access this page."
+            redirect_to employeeportal_login_path
+        end
+    end
+
+    # Confirms a logged-in admin.
+    def logged_in_admin
+        unless (current_employee.admin && logged_in?)
+            flash[:danger] = "Please log in to access this page."
             redirect_to employeeportal_login_path
         end
     end
