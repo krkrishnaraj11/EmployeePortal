@@ -1,9 +1,10 @@
 require 'test_helper'
 
 class EmployeesControllerTest < ActionDispatch::IntegrationTest
-  test "should get new" do
-    get employees_new_url
-    assert_response :success
-  end
+  
+  # test "should get root" do
+  #   get root_url
+  #   assert_redirected :success
+  # end
 
 end

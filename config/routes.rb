@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  get 'employees/new'
+  get '/employeeportal/login', to: 'emp_sessions#new'
+  post '/employeeportal/login', to: 'emp_sessions#create'
+  delete '/employeeportal/logout', to: 'emp_sessions#destroy'
 
-  get 'employees_pages/home'
+  get '/employeeportal/dashboard', to: 'emp_sessions#show'
 
-  get 'employees_pages/dashboard'
+  root 'employees#new'
+  resources :employees
 end
