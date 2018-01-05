@@ -38,7 +38,7 @@ class EmployeesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get employee details" do
     log_in_as @admin
-    get admin_employeedetails_path
+    get admin_employeedetails_path(:id => @employee.id)
     assert_response :success
   end
 

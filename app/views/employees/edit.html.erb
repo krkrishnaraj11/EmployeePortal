@@ -7,8 +7,21 @@
 
         <%= form_for(@employee, url: employeeportal_path(:id => @employee.id), method: :patch) do |f| %>
             <%= render 'shared/error_messages', object: @employee %>
+            <% if f.object.picture? %>
+                <%= image_tag @employee.picture.thumb.url, class: "image" %>
+            <% else %>
+                <span class = "image1">
+                    <%= gravatar_for (@employee) %>
+                </span>
+            <% end %>
             <div>
                 <div>
+                    <div>
+                        <%= f.label :picture %> 
+                    </div>
+                    <div>
+                        <%= f.file_field :picture %>
+                    </div>
 
                     <div>
                         <%= f.label :id %>
@@ -23,7 +36,6 @@
                     
                         <%= f.text_field :name, :disabled => true, class: "form-control" %>
                     </div>
-
 
                     <div>
                         <%= f.label :gender %>
@@ -94,4 +106,4 @@
             </div>
             <% end %>
     </div>
-</div>
+</div>  

@@ -16,13 +16,13 @@ class EmpSessionsController < ApplicationController
       elsif employee.admin && request.original_fullpath == admin_login_path
         flash[:success] = 'Login Successful'
         redirect_to admin_dashboard_path 
-      else
-        flash.now[:danger] = 'Invalid username/password combination'
-        render 'new'
+      else 
+        flash[:danger] = "Invalid username/password combination"
+        redirect_back(fallback_location: request.original_fullpath)
       end
-    else
-      flash.now[:danger] = 'Invalid username/password combination' 
-      render 'new'
+    else 
+      flash[:danger] = "Invalid username/password combination"
+      redirect_back(fallback_location: request.original_fullpath)
     end
   end
 

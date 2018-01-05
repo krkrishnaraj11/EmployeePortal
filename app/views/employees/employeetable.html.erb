@@ -14,7 +14,7 @@
             <% unless employee.admin %>
                 <tr>
                     <td>
-                        <%= link_to employee.name, "#" %>
+                        <%= link_to employee.name, admin_employeedetails_path(:id => employee.id) %>
                     </td>
                     <td>
                         <%= employee.email%>
@@ -26,15 +26,16 @@
                         <%= employee.active == true ? "Yes" : "No" %>
                     </td>
                     <td>
-                        <%= link_to "Edit", "#" %>
+                        <%= link_to "Edit", admin_edit_path(:id => employee.id) %>
                     </td>
                     <td>
-                        <%= link_to "Delete", "#" %>
-
+                        <%= link_to "Delete", admin_delete_path(:id => employee.id), method: :delete, 
+                                                        data: { confirm: "Do you want to delete?" } %>
                     </td>
                 </tr>
             <% end %>
         <% end %>
     </table>
-    <%= link_to "Add Employee", "#" , class: "btn btn-primary btn-sm " %>
+    <%= link_to "Add Employee", admin_addemployee_path , class: "btn btn-primary btn-sm " %>
 </div>
+<div class = "container text-right"><%= will_paginate @employee %></div>

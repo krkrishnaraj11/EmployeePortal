@@ -44,3 +44,20 @@ admin:
   date_of_birth: 2018-01-03
   admin: true
   password_digest: <%= Employee.digest('Ha66y@Air') %>
+
+<% 10.times do |n| %>
+employee_<%= n %>:
+  name: <%= "Employee" %>
+  gender: <%= "Male" %>
+  designation: <%= "Designation" %>
+  phone: <%= "#{1000000000 + n}" %>
+  email: <%= "employee-#{n}@example.com" %>
+  date_of_join: 2018-01-04
+  address: Sajith Nivas, Karumalloor P.O Thattampady, Aluva, Ernakulam 
+  active: true
+  username: <%= "employeew-#{n}@example.com" %>
+  personal_email: <%= "employee-w#{n}@example.com" %>
+  date_of_birth: 2018-02-03
+  admin: false
+  password_digest: <%= Employee.digest('Ha66y@Air') %>
+<% end %>

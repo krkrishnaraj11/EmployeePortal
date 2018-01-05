@@ -14,7 +14,14 @@ Rails.application.routes.draw do
 
   get '/admin/dashboard', to: 'employees#admindashboard'
   get '/admin/employee', to: 'employees#employeetable'
+
   get '/admin/addemployee', to: 'employees#addemployee'
+  post '/admin/addemployee', to: 'employees#create'
+  delete '/admin/delete', to: 'employees#destroy'
+  
+  get 'admin/edit', to: 'employees#adminedit'
+  patch 'admin/edit', to: 'employees#update'
+
   get '/admin/employeedetails', to: 'employees#employeedetails'
   get '/admin/projects', to: 'employees#projects'
 

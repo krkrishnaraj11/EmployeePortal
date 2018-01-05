@@ -18,14 +18,15 @@ class Employee < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
 
-    validates :date_of_join, presence: true
+    mount_uploader :picture, PictureUploader
 
-    validates :address, length: { minimum: 25, maximum: 255 }
+    # validates :date_of_join, presence: true
 
-    before_save { personal_email.downcase! }
-    validates :personal_email, length: { maximum: 255 },
-                    format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
+    # validates :address, length: { minimum: 25, maximum: 255 }
+
+    # before_save { personal_email.downcase! }
+    # validates :personal_email, length: { maximum: 255 },
+    #                 format: { with: VALID_EMAIL_REGEX }
 
     has_secure_password
     VALID_PASSWORD_REGEX = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*[\W])(?=.*[\d])[\S]{8,15}\z/
