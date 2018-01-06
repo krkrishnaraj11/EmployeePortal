@@ -20,14 +20,10 @@ class Employee < ApplicationRecord
 
     mount_uploader :picture, PictureUploader
 
-    # validates :date_of_join, presence: true
+    validates :date_of_join, presence: true
 
-    # validates :address, length: { minimum: 25, maximum: 255 }
-
-    # before_save { personal_email.downcase! }
-    # validates :personal_email, length: { maximum: 255 },
-    #                 format: { with: VALID_EMAIL_REGEX }
-
+    validates :address, length: { minimum: 25, maximum: 255 }
+    
     has_secure_password
     VALID_PASSWORD_REGEX = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*[\W])(?=.*[\d])[\S]{8,15}\z/
     validates :password, format: { with: VALID_PASSWORD_REGEX }, allow_nil: true

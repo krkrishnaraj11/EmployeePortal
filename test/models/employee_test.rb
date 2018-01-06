@@ -112,60 +112,28 @@ class EmployeeTest < ActiveSupport::TestCase
     assert_not duplicate_employee.valid?
   end
 
-  # test "date of join should be present" do
-  #   @employee.date_of_join = " "
-  #   assert_not @employee.valid?
-  # end
+  test "date of join should be present" do
+    @employee.date_of_join = " "
+    assert_not @employee.valid?
+  end
 
-  # test "date of join should be valid" do
-  #   @employee.date_of_join = "2016-03-17"
-  #   assert @employee.valid?
-  # end
+  test "date of join should be valid" do
+    @employee.date_of_join = "2016-03-17"
+    assert @employee.valid?
+  end
 
-  # test "address should not be invalid" do
-  #   employee_addresses = ["a"*24, "a"*256]
-  #   employee_addresses.each do |invalid_emp_address|
-  #     @employee.address = invalid_emp_address
-  #     assert_not @employee.valid?, "#{invalid_emp_address.inspect} should be valid"
-  #   end
-  # end
+  test "address should not be invalid" do
+    employee_addresses = ["a"*24, "a"*256]
+    employee_addresses.each do |invalid_emp_address|
+      @employee.address = invalid_emp_address
+      assert_not @employee.valid?, "#{invalid_emp_address.inspect} should be valid"
+    end
+  end
 
-  # test "address should be valid" do
-  #   @employee.address = "Sajith Nivas, Karumalloor P.O, Thattampady, Aluva, Ernakulam"
-  #   assert @employee.valid?
-  # end
-
-  # test "personal email addresses should be saved as lower-case" do
-  #   mixed_case_email = "Foo@ExAMPle.CoM"
-  #   @employee.personal_email = mixed_case_email
-  #   @employee.save
-  #   assert_equal mixed_case_email.downcase, @employee.reload.personal_email
-  # end
-
-  # test "personal email validation should accept valid addresses" do
-  #   valid_addresses = %w[employee@example.com employee@foo.COM A_US-ER@foo.bar.org
-  #                       first.last@foo.jp alice+bob@baz.cn]
-  #   valid_addresses.each do |valid_address|
-  #     @employee.personal_email = valid_address
-  #     assert @employee.valid?, "#{valid_address.inspect} should be valid"
-  #   end
-  # end
-
-  # test "personal email validation should reject invalid addresses" do
-  #   invalid_addresses = %w[employee@example,com employee_at_foo.org employee.name@example.
-  #                       foo@bar..com    foo@bar_baz.com foo@bar+baz.com]
-  #   invalid_addresses.each do |invalid_address|
-  #     @employee.personal_email = invalid_address
-  #     assert_not @employee.valid?, "#{invalid_address.inspect} should be invalid"
-  #   end
-  # end
-
-  # test "personal email addresses should be unique" do
-  #   duplicate_employee = @employee.dup
-  #   duplicate_employee.personal_email = @employee.personal_email.upcase
-  #   @employee.save
-  #   assert_not duplicate_employee.valid?
-  # end
+  test "address should be valid" do
+    @employee.address = "Sajith Nivas, Karumalloor P.O, Thattampady, Aluva, Ernakulam"
+    assert @employee.valid?
+  end
 
   test "password should be present" do
     @employee.password = @employee.password_confirmation = " " * 8

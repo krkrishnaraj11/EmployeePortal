@@ -5,17 +5,24 @@ class EmployeesLoginTest < ActionDispatch::IntegrationTest
 
   def setup
     @employee = employees(:employee)
+    @admin = employees(:admin)
   end
 
 
   test "login with invalid information" do
     get employeeportal_login_path
     assert_template 'emp_sessions/new'
-    post employeeportal_login_path, params: { session: { email: "", password: "" } }
-    assert_template 'emp_sessions/new'
+    post employeeportal_login_path, params: { session: { username: "", password: "" } }
+    assert_redirected_to employeeportal_login_path
     assert_not flash.empty?
-    get root_path
-    assert flash.empty?
+  end
+
+  test "login with admin details" do
+    get employeeportal_login_path
+    assert_template 'emp_sessions/new'
+    post employeeportal_login_path, params: { session: { username: @admin.username, password: @admin.password } }
+    assert_redirected_to employeeportal_login_path
+    assert_not flash.empty?
   end
 
   test "login with valid information" do
