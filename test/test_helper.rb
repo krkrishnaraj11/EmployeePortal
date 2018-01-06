@@ -10,6 +10,10 @@ class ActiveSupport::TestCase
   # Returns true if a test employee is logged in.
   def is_logged_in?
     !session[:employee_id].nil?
+  end  
+  
+  def is_admin?
+    Employee.find_by_id(session[:employee_id]).admin
   end
 
   # Log in as a particular employee.
