@@ -1,0 +1,1937 @@
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (84.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (89.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateEmployees (20180103053050)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "employees" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "gender" varchar, "designation" varchar, "phone" integer, "email" varchar, "date_of_join" date, "address" varchar, "active" boolean, "username" varchar, "personal_email" varchar, "date_of_birth" date, "admin" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180103053050"]]
+  [1m[35m (73.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to ChangeIntegerLimitForPhone (20180103091122)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aemployees" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar DEFAULT NULL, "gender" varchar DEFAULT NULL, "designation" varchar DEFAULT NULL, "phone" integer DEFAULT NULL, "email" varchar DEFAULT NULL, "date_of_join" date DEFAULT NULL, "address" varchar DEFAULT NULL, "active" boolean DEFAULT NULL, "username" varchar DEFAULT NULL, "personal_email" varchar DEFAULT NULL, "date_of_birth" date DEFAULT NULL, "admin" boolean DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aemployees" ("id","name","gender","designation","phone","email","date_of_join","address","active","username","personal_email","date_of_birth","admin","created_at","updated_at")
+                     SELECT "id","name","gender","designation","phone","email","date_of_join","address","active","username","personal_email","date_of_birth","admin","created_at","updated_at" FROM "employees"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "employees"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "employees" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar DEFAULT NULL, "gender" varchar DEFAULT NULL, "designation" varchar DEFAULT NULL, "phone" integer(10) DEFAULT NULL, "email" varchar DEFAULT NULL, "date_of_join" date DEFAULT NULL, "address" varchar DEFAULT NULL, "active" boolean DEFAULT NULL, "username" varchar DEFAULT NULL, "personal_email" varchar DEFAULT NULL, "date_of_birth" date DEFAULT NULL, "admin" boolean DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "employees" ("id","name","gender","designation","phone","email","date_of_join","address","active","username","personal_email","date_of_birth","admin","created_at","updated_at")
+                     SELECT "id","name","gender","designation","phone","email","date_of_join","address","active","username","personal_email","date_of_birth","admin","created_at","updated_at" FROM "aemployees"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aemployees"[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180103091122"]]
+  [1m[35m (61.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddPasswordDigestToEmployees (20180103110623)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "employees" ADD "password_digest" varchar[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180103110623"]]
+  [1m[35m (49.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddRememberDigestToEmployees (20180104144531)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "employees" ADD "remember_digest" varchar[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180104144531"]]
+  [1m[35m (52.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddImageToEmployees (20180105064616)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "employees" ADD "picture" varchar[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180105064616"]]
+  [1m[35m (51.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-01-06 04:07:22.587808"], ["updated_at", "2018-01-06 04:07:22.587808"]]
+  [1m[35m (52.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for 127.0.0.1 at 2018-01-06 09:41:27 +0530
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EmployeesController#new as HTML
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 8ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 09:41:27 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (16.7ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (19.3ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.3ms)
+Completed 200 OK in 1944ms (Views: 1942.6ms | ActiveRecord: 0.0ms)
+
+
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 790757169], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mEmployee Load (0.6ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Started GET "/" for 127.0.0.1 at 2018-01-06 10:31:13 +0530
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EmployeesController#new as HTML
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 6ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 10:31:13 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (9.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (10.9ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.4ms)
+Completed 200 OK in 242ms (Views: 241.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/employeeportal/login" for 127.0.0.1 at 2018-01-06 10:31:32 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"FGZ48datYqD2AMh2+uboWlQCfIK1NZOXXhyNRKp6m1ESISUTmp59+WAA195hi6GPSBSYqjWTRkWFkLIvuC2o9w==", "session"=>{"username"=>"krkrishnaraj11", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krkrishnaraj11"], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 26ms (ActiveRecord: 1.1ms)
+
+
+  
+BCrypt::Errors::InvalidHash (invalid hash):
+  
+app/controllers/emp_sessions_controller.rb:10:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 790757169], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 790757169], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mEmployee Load (0.6ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 7907571692], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 7907571692], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 7907571692], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 7907571692], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 7907571692], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 7907571692], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 7907571692], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.6ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", nil], ["LIMIT", 1]]
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" IS NULL AND ("employees"."id" != ?) LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."email" IS NULL AND ("employees"."id" != ?) LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+Started GET "/" for 127.0.0.1 at 2018-01-06 11:11:24 +0530
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EmployeesController#new as HTML
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 6ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 11:11:24 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (12.9ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (79.8ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (4.5ms)
+Completed 200 OK in 347ms (Views: 345.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin/login" for 127.0.0.1 at 2018-01-06 11:12:27 +0530
+Processing by EmployeesController#adminlogin as HTML
+  Rendering employees/adminlogin.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.0ms)
+  Rendered employees/adminlogin.html.erb within layouts/application (3.1ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.4ms)
+Completed 200 OK in 52ms (Views: 50.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/admin/login" for 127.0.0.1 at 2018-01-06 11:12:37 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"OEcvjXEoQru+VDx0B2igHlqCL2vWAPKbgpedk0C8T801YBbGzGtg92U7A9ihtGnfKiK7bO/ydGCnsueSsvQojA==", "session"=>{"username"=>"krkrishnaraj11", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krkrishnaraj11"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin/login
+Completed 302 Found in 14ms (ActiveRecord: 0.7ms)
+
+
+Started GET "/admin/login" for 127.0.0.1 at 2018-01-06 11:12:37 +0530
+Processing by EmployeesController#adminlogin as HTML
+  Rendering employees/adminlogin.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (3.1ms)
+  Rendered employees/adminlogin.html.erb within layouts/application (4.5ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+Completed 200 OK in 61ms (Views: 59.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/admin/login" for 127.0.0.1 at 2018-01-06 11:13:53 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"EmvOA/AzoEmDAS6n+NUCeIyu36bqax8nY33W70NbjjMfTPdITXCCBVhuEQteCcu5/A5LodOZmdxGWKzusRPpcg==", "session"=>{"username"=>"krkrishnaraj11", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krkrishnaraj11"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin/login
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/admin/login" for 127.0.0.1 at 2018-01-06 11:13:53 +0530
+Processing by EmployeesController#adminlogin as HTML
+  Rendering employees/adminlogin.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.1ms)
+  Rendered employees/adminlogin.html.erb within layouts/application (3.2ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.7ms)
+Completed 200 OK in 47ms (Views: 46.0ms | ActiveRecord: 0.0ms)
+
+
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."email" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."email" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" ORDER BY "employees"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."email" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 7907571692], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 7907571692], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 7907571692], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (2.4ms)[0m  [1m[32mINSERT INTO "employees" ("name", "gender", "designation", "phone", "email", "date_of_join", "address", "created_at", "updated_at", "password_digest") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Krishnaraj R"], ["gender", "Male"], ["designation", "Developer"], ["phone", 7907571692], ["email", "krkrishnaraj11@gmail.com"], ["date_of_join", "2017-08-11"], ["address", "Rajnivas, Ballimogaru, Kudlu PO, Kasaragod"], ["created_at", "2018-01-06 06:39:02.771898"], ["updated_at", "2018-01-06 06:39:02.771898"], ["password_digest", "$2a$10$bV9L6RQuH5ckjFicun1E1OgBdjXWG5cjfio/.xiqvlhXPPXvQseVW"]]
+  [1m[35m (60.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 7907571692], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mEmployee Load (0.6ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? AND ("employees"."id" != ?) LIMIT ?[0m  [["phone", 7907571692], ["id", 3], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) AND ("employees"."id" != ?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "employees" SET "password_digest" = ?, "updated_at" = ? WHERE "employees"."id" = ?[0m  [["password_digest", "$2a$10$TkHlMcHpUo8w4OZaMniLgOi7SoCN.MBGS.5uIRu3EWh9Cgjfcexzq"], ["updated_at", "2018-01-06 06:40:53.981781"], ["id", 3]]
+  [1m[35m (53.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? AND ("employees"."id" != ?) LIMIT ?[0m  [["phone", 7907571692], ["id", 3], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) AND ("employees"."id" != ?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (1.0ms)[0m  [1m[33mUPDATE "employees" SET "password_digest" = ?, "updated_at" = ? WHERE "employees"."id" = ?[0m  [["password_digest", "$2a$10$8Ur8yCZJfTRjKjuE12z7XOVdBIIsYJy.yNHXzSUGtGnbV8cP/jx62"], ["updated_at", "2018-01-06 06:41:04.669999"], ["id", 3]]
+  [1m[35m (76.9ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2018-01-06 12:11:39 +0530
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EmployeesController#new as HTML
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 9ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:11:39 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (15.5ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (17.2ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.7ms)
+Completed 200 OK in 274ms (Views: 272.1ms | ActiveRecord: 0.0ms)
+
+
+  [1m[36mEmployee Load (1.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? AND ("employees"."id" != ?) LIMIT ?[0m  [["phone", 7907571692], ["id", 3], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) AND ("employees"."id" != ?) LIMIT ?[0m  [["email", "krkrishnaraj11@gmail.com"], ["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "employees" SET "password_digest" = ?, "username" = ?, "updated_at" = ? WHERE "employees"."id" = ?[0m  [["password_digest", "$2a$10$7LwWOCthz1Clv3DWFQcjLutQr1U0ENyR6Fa1cGZNc9fJAhKm5WDIW"], ["username", "krkrishnaraj11"], ["updated_at", "2018-01-06 06:42:04.735895"], ["id", 3]]
+  [1m[35m (71.5ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:12:14 +0530
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (11.2ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (13.8ms)
+  Rendered layouts/_nav_link.html.erb (1.3ms)
+  Rendered layouts/_header.html.erb (32.0ms)
+Completed 200 OK in 259ms (Views: 252.1ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:12:33 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"hLHQS+msNXbNM/UUL/84xRl+gADK1m6Eov6o/qr3fNnDIh+ZPnR5NT7R4tjDdwkyVMrvCfkTPRLQZ3HRYsHhVA==", "session"=>{"username"=>"krkrishnaraj11", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krkrishnaraj11"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 120ms (ActiveRecord: 1.5ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:12:33 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.9ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.2ms)
+  Rendered layouts/_nav_link.html.erb (2.0ms)
+  Rendered layouts/_header.html.erb (4.2ms)
+Completed 200 OK in 66ms (Views: 65.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:12:47 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"sGtnQwwFaIhCpSaK4HqHvc5WOtv24l7Em88F5LVZDEf3+KiR290ky7FHMUYM8rZKg+JV0sUnDVLpVtzLfW+Ryg==", "session"=>{"username"=>"krkrishnaraj11@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:12:47 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (4.7ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (6.5ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (2.7ms)
+Completed 200 OK in 79ms (Views: 77.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:12:58 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"pZobDE4lS2uCy/1kGBNrAaJ9qcZIBExA+qVh3Gcofl/iCdTemf0HKHEp6qj0m1r278nGz3vBH9aIPLjzrx7j0g==", "session"=>{"username"=>"krkrishnaraj11@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:12:58 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (5.6ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (8.2ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+Completed 200 OK in 68ms (Views: 67.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin/login" for 127.0.0.1 at 2018-01-06 12:13:02 +0530
+Processing by EmployeesController#adminlogin as HTML
+  Rendering employees/adminlogin.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.7ms)
+  Rendered employees/adminlogin.html.erb within layouts/application (4.2ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.6ms)
+Completed 200 OK in 55ms (Views: 53.2ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/admin/login" for 127.0.0.1 at 2018-01-06 12:13:14 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"NWkf90XZMtScDc0wiExfmtFcdykOX0bFRc5m9vVcGeVy+tAlkgF+l2/v2vxkxG5tnOgYID2aFVM3V7/ZPWqEaA==", "session"=>{"username"=>"krkrishnaraj11", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krkrishnaraj11"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin/dashboard
+Completed 302 Found in 86ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/admin/dashboard" for 127.0.0.1 at 2018-01-06 12:13:14 +0530
+Processing by EmployeesController#admindashboard as HTML
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/admindashboard.html.erb within layouts/application
+  Rendered employees/admindashboard.html.erb within layouts/application (0.9ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.2ms)
+Completed 200 OK in 48ms (Views: 45.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-06 12:13:21 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  Rendered employees/employeetable.html.erb within layouts/application (4.1ms)
+  Rendered layouts/_nav_link.html.erb (1.3ms)
+  Rendered layouts/_header.html.erb (2.3ms)
+Completed 200 OK in 66ms (Views: 63.0ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/admin/addemployee" for 127.0.0.1 at 2018-01-06 12:13:24 +0530
+Processing by EmployeesController#addemployee as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/addemployee.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.7ms)
+  Rendered employees/addemployee.html.erb within layouts/application (16.7ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.0ms)
+Completed 200 OK in 67ms (Views: 63.6ms | ActiveRecord: 0.2ms)
+
+
+Started POST "/admin/addemployee" for 127.0.0.1 at 2018-01-06 12:15:28 +0530
+Processing by EmployeesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"wViX9lGKXy57DEWCU+/8AWizpmJYoIDnVi5IjtUb687on0uBWSgXXzC1K67gpJz1tAUuR8NE9P9feDQ4vxjXYw==", "employee"=>{"name"=>"Krishnaraj R", "gender"=>"Male", "designation"=>"Full Stack RoR Developer", "phone"=>"8281531945", "email"=>"krishnarajrnair@outlook.com", "date_of_join"=>"2017-11-21", "date_of_birth"=>"1994-08-11", "address"=>"SOUPARNIKA, KIZHAKKEKKARA, MUVATTUPUZHA, ERNAKULAM DIST.", "active"=>"1", "username"=>"krishnarajrnair", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Add Employee"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? LIMIT ?[0m  [["phone", 8281531945], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", "krishnarajrnair@outlook.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "employees" ("name", "gender", "designation", "phone", "email", "date_of_join", "address", "active", "username", "date_of_birth", "created_at", "updated_at", "password_digest") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Krishnaraj R"], ["gender", "Male"], ["designation", "Full Stack RoR Developer"], ["phone", 8281531945], ["email", "krishnarajrnair@outlook.com"], ["date_of_join", "2017-11-21"], ["address", "SOUPARNIKA, KIZHAKKEKKARA, MUVATTUPUZHA, ERNAKULAM DIST."], ["active", "t"], ["username", "krishnarajrnair"], ["date_of_birth", "1994-08-11"], ["created_at", "2018-01-06 06:45:28.616131"], ["updated_at", "2018-01-06 06:45:28.616131"], ["password_digest", "$2a$10$uUv7ocQs8JzKmmXQ.39ZMu6uMk3JNuTZm28lDxXqYhqX4sRlw8U7S"]]
+  [1m[35m (74.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/admin/employee
+Completed 302 Found in 173ms (ActiveRecord: 75.2ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-06 12:15:28 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "employees"[0m
+  Rendered employees/employeetable.html.erb within layouts/application (4.3ms)
+  Rendered layouts/_nav_link.html.erb (1.9ms)
+  Rendered layouts/_header.html.erb (3.1ms)
+Completed 200 OK in 53ms (Views: 50.0ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admin/employeedetails?id=4" for 127.0.0.1 at 2018-01-06 12:15:31 +0530
+Processing by EmployeesController#employeedetails as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/employeedetails.html.erb within layouts/application
+  Rendered employees/employeedetails.html.erb within layouts/application (1.5ms)
+  Rendered layouts/_nav_link.html.erb (1.7ms)
+  Rendered layouts/_header.html.erb (3.2ms)
+Completed 200 OK in 57ms (Views: 43.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admin/dashboard" for 127.0.0.1 at 2018-01-06 12:15:36 +0530
+Processing by EmployeesController#admindashboard as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/admindashboard.html.erb within layouts/application
+  Rendered employees/admindashboard.html.erb within layouts/application (1.1ms)
+  Rendered layouts/_nav_link.html.erb (1.5ms)
+  Rendered layouts/_header.html.erb (3.1ms)
+Completed 200 OK in 50ms (Views: 47.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/admin/projects" for 127.0.0.1 at 2018-01-06 12:15:37 +0530
+Processing by EmployeesController#projects as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/projects.html.erb within layouts/application
+  Rendered employees/projects.html.erb within layouts/application (0.5ms)
+  Rendered layouts/_nav_link.html.erb (1.5ms)
+  Rendered layouts/_header.html.erb (3.0ms)
+Completed 200 OK in 49ms (Views: 46.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/admin/dashboard" for 127.0.0.1 at 2018-01-06 12:15:39 +0530
+Processing by EmployeesController#admindashboard as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/admindashboard.html.erb within layouts/application
+  Rendered employees/admindashboard.html.erb within layouts/application (1.3ms)
+  Rendered layouts/_nav_link.html.erb (1.8ms)
+  Rendered layouts/_header.html.erb (3.6ms)
+Completed 200 OK in 59ms (Views: 55.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/admin/projects" for 127.0.0.1 at 2018-01-06 12:15:41 +0530
+Processing by EmployeesController#projects as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/projects.html.erb within layouts/application
+  Rendered employees/projects.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_nav_link.html.erb (1.3ms)
+  Rendered layouts/_header.html.erb (2.6ms)
+Completed 200 OK in 59ms (Views: 56.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-06 12:15:41 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "employees"[0m
+  Rendered employees/employeetable.html.erb within layouts/application (5.9ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (2.8ms)
+Completed 200 OK in 58ms (Views: 54.3ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/admin/edit?id=4" for 127.0.0.1 at 2018-01-06 12:15:43 +0530
+Processing by EmployeesController#adminedit as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/adminedit.html.erb within layouts/application
+  Rendered employees/adminedit.html.erb within layouts/application (7.7ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.7ms)
+Completed 200 OK in 52ms (Views: 48.9ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admin/dashboard" for 127.0.0.1 at 2018-01-06 12:15:45 +0530
+Processing by EmployeesController#admindashboard as HTML
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/admindashboard.html.erb within layouts/application
+  Rendered employees/admindashboard.html.erb within layouts/application (1.0ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.1ms)
+Completed 200 OK in 56ms (Views: 53.1ms | ActiveRecord: 0.4ms)
+
+
+Started DELETE "/admin/logout" for 127.0.0.1 at 2018-01-06 12:15:50 +0530
+Processing by EmpSessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"siym3b/BHY1J8EXJsKJfm+JjQJ6/twsUJ5a5rn/Yipv1v2kPaBlRzroSUgVcKm5sr9cvl4xyWIJVD2CBt+4XFg=="}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 2ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:15:50 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (3.0ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (5.2ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (2.1ms)
+Completed 200 OK in 54ms (Views: 53.1ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:16:07 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"oFdeYG9uvi+WdgFwkebSqGAeheoiWjaGoLnFGt/ZOyvnxJGyuLbybGWUFrx9buNfLarq4xGfZRDSIBw1F++mpg==", "session"=>{"username"=>"krishnarajrnair", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krishnarajrnair"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/dashboard
+Completed 302 Found in 84ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-06 12:16:07 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_nav_link.html.erb (1.3ms)
+  Rendered layouts/_header.html.erb (2.8ms)
+Completed 200 OK in 46ms (Views: 43.6ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-06 12:16:10 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.7ms)
+  Rendered employees/edit.html.erb within layouts/application (8.9ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+Completed 200 OK in 55ms (Views: 52.8ms | ActiveRecord: 0.3ms)
+
+
+Started PATCH "/employeeportal?id=4" for 127.0.0.1 at 2018-01-06 12:16:45 +0530
+Processing by EmployeesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"+KCN9mEIEksCUqe3TOwI7qUboMt8heD8YGtN7TqWFaQWGaznBnN6+B6rrmirY3cpXQ2h9oF2jAtmh+OasxIU5w==", "employee"=>{"picture"=>#<ActionDispatch::Http::UploadedFile:0x007fcc78289a28 @tempfile=#<Tempfile:/tmp/RackMultipart20180106-26739-194b5jz.jpg>, @original_filename="19959086_840917506071825_9160077355275252552_n.jpg", @content_type="image/jpeg", @headers="Content-Disposition: form-data; name=\"employee[picture]\"; filename=\"19959086_840917506071825_9160077355275252552_n.jpg\"\r\nContent-Type: image/jpeg\r\n">, "phone"=>"8281531945", "personal_email"=>"", "address"=>"SOUPARNIKA, KIZHAKKEKKARA, MUVATTUPUZHA, ERNAKULAM DIST."}, "commit"=>"Update", "id"=>"4"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? AND ("employees"."id" != ?) LIMIT ?[0m  [["phone", 8281531945], ["id", 4], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) AND ("employees"."id" != ?) LIMIT ?[0m  [["email", "krishnarajrnair@outlook.com"], ["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "employees" SET "personal_email" = ?, "picture" = ?, "updated_at" = ? WHERE "employees"."id" = ?[0m  [["personal_email", ""], ["picture", "19959086_840917506071825_9160077355275252552_n.jpg"], ["updated_at", "2018-01-06 06:46:45.619284"], ["id", 4]]
+  [1m[35m (95.3ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/employeeportal/dashboard
+Completed 302 Found in 207ms (ActiveRecord: 96.9ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-06 12:16:45 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.7ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.5ms)
+Completed 200 OK in 45ms (Views: 42.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-06 12:16:47 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.8ms)
+  Rendered employees/edit.html.erb within layouts/application (12.8ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.5ms)
+Completed 200 OK in 61ms (Views: 59.2ms | ActiveRecord: 0.1ms)
+
+
+Started PATCH "/employeeportal?id=4" for 127.0.0.1 at 2018-01-06 12:17:03 +0530
+Processing by EmployeesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2rbpntN7LZ/FJju7Bv3FXztOS0xPWiSww3LmFSgFD/A0D8iPtABFLNnfMmThcrqYw1hKcbKpSEfFnkhioYEOsw==", "employee"=>{"phone"=>"8281531945", "personal_email"=>"krkrishnaraj11@gmail.com", "address"=>"SOUPARNIKA, KIZHAKKEKKARA, MUVATTUPUZHA, ERNAKULAM DIST."}, "commit"=>"Update", "id"=>"4"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" = ? AND ("employees"."id" != ?) LIMIT ?[0m  [["phone", 8281531945], ["id", 4], ["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) AND ("employees"."id" != ?) LIMIT ?[0m  [["email", "krishnarajrnair@outlook.com"], ["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (1.8ms)[0m  [1m[33mUPDATE "employees" SET "personal_email" = ?, "updated_at" = ? WHERE "employees"."id" = ?[0m  [["personal_email", "krkrishnaraj11@gmail.com"], ["updated_at", "2018-01-06 06:47:03.690390"], ["id", 4]]
+  [1m[35m (107.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/employeeportal/dashboard
+Completed 302 Found in 121ms (ActiveRecord: 110.4ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-06 12:17:03 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.4ms)
+  Rendered layouts/_nav_link.html.erb (1.5ms)
+  Rendered layouts/_header.html.erb (3.2ms)
+Completed 200 OK in 44ms (Views: 42.4ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-06 12:17:09 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.8ms)
+  Rendered employees/edit.html.erb within layouts/application (13.0ms)
+  Rendered layouts/_nav_link.html.erb (1.5ms)
+  Rendered layouts/_header.html.erb (3.2ms)
+Completed 200 OK in 60ms (Views: 57.1ms | ActiveRecord: 0.3ms)
+
+
+Started DELETE "/employeeportal/logout" for 127.0.0.1 at 2018-01-06 12:17:10 +0530
+Processing by EmpSessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"FTGHLuj0C1/GvC3voCLr5p4xXStwX61wal6Vd57TwlhSokj8PyxHHDVeOiNMqtoR04UyIkOa/uYYx0xYVuVf1Q=="}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:17:10 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (3.3ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.8ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.6ms)
+Completed 200 OK in 55ms (Views: 53.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin/login" for 127.0.0.1 at 2018-01-06 12:17:13 +0530
+Processing by EmployeesController#adminlogin as HTML
+  Rendering employees/adminlogin.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.7ms)
+  Rendered employees/adminlogin.html.erb within layouts/application (4.4ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (3.3ms)
+Completed 200 OK in 58ms (Views: 56.7ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/admin/login" for 127.0.0.1 at 2018-01-06 12:17:25 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"ILYa1iIfvMGU1652rKMGeLCNFoqW6bEc8O83ybyvDldnJdUE9cfwgmc1ubpAKzeP/Tl5g6Us4oqCdu7mdJmT2g==", "session"=>{"username"=>"krkrishnaraj11", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krkrishnaraj11"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin/dashboard
+Completed 302 Found in 86ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/admin/dashboard" for 127.0.0.1 at 2018-01-06 12:17:25 +0530
+Processing by EmployeesController#admindashboard as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/admindashboard.html.erb within layouts/application
+  Rendered employees/admindashboard.html.erb within layouts/application (0.9ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+Completed 200 OK in 47ms (Views: 44.8ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-06 12:17:28 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "employees"[0m
+  Rendered employees/employeetable.html.erb within layouts/application (6.0ms)
+  Rendered layouts/_nav_link.html.erb (1.7ms)
+  Rendered layouts/_header.html.erb (3.3ms)
+Completed 200 OK in 63ms (Views: 59.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admin/projects" for 127.0.0.1 at 2018-01-06 12:17:31 +0530
+Processing by EmployeesController#projects as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/projects.html.erb within layouts/application
+  Rendered employees/projects.html.erb within layouts/application (0.5ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.2ms)
+Completed 200 OK in 58ms (Views: 56.0ms | ActiveRecord: 0.3ms)
+
+
+Started DELETE "/admin/logout" for 127.0.0.1 at 2018-01-06 12:17:32 +0530
+Processing by EmpSessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"0ZyzdMFchnHM1Mq39KjMT2YKRmM8LrUnQ+2+VyQdR0eWD3ymFoTKMj823XsYIP24K74pag/r5rExdGd47Cvayg=="}
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 3ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:17:32 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.2ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.2ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.6ms)
+Completed 200 OK in 47ms (Views: 46.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:19:20 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.1ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.3ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.7ms)
+Completed 200 OK in 39ms (Views: 37.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:19:40 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.9ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.3ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+Completed 200 OK in 44ms (Views: 42.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:20:09 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (9.4ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (11.4ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.6ms)
+Completed 200 OK in 48ms (Views: 47.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:21:11 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.2ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.3ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (2.1ms)
+Completed 200 OK in 1410ms (Views: 1408.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:21:29 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.9ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.0ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+Completed 200 OK in 1445ms (Views: 1443.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:21:59 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.7ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.0ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.0ms)
+Completed 200 OK in 1422ms (Views: 1420.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin/login" for 127.0.0.1 at 2018-01-06 12:22:14 +0530
+Processing by EmployeesController#adminlogin as HTML
+  Rendering employees/adminlogin.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (3.1ms)
+  Rendered employees/adminlogin.html.erb within layouts/application (5.7ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.7ms)
+Completed 200 OK in 68ms (Views: 66.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employee/login" for 127.0.0.1 at 2018-01-06 12:22:36 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/employee/login"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:22:46 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (3.5ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.7ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.9ms)
+Completed 200 OK in 51ms (Views: 50.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:22:59 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.6ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.8ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.7ms)
+Completed 200 OK in 1424ms (Views: 1422.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:23:22 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.0ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.3ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (2.8ms)
+Completed 200 OK in 1461ms (Views: 1459.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:23:41 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.4ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.8ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.2ms)
+Completed 200 OK in 1419ms (Views: 1416.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:23:58 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.7ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.3ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.3ms)
+Completed 200 OK in 1671ms (Views: 1669.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:24:34 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.2ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.6ms)
+Completed 200 OK in 1412ms (Views: 1410.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:24:55 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.1ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.3ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.5ms)
+Completed 200 OK in 1415ms (Views: 1413.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:25:18 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.4ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.7ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.6ms)
+Completed 200 OK in 1434ms (Views: 1432.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:25:30 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.7ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.0ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.3ms)
+Completed 200 OK in 1427ms (Views: 1424.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:26:01 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.3ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.6ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.5ms)
+Completed 200 OK in 1457ms (Views: 1456.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:27:48 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.3ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.7ms)
+Completed 200 OK in 1462ms (Views: 1460.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:27:58 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.2ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.2ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.6ms)
+Completed 200 OK in 1424ms (Views: 1422.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:28:10 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.6ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (2.9ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.7ms)
+Completed 200 OK in 1435ms (Views: 1434.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:28:19 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.5ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.9ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.5ms)
+Completed 200 OK in 1418ms (Views: 1416.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:28:38 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.0ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+Completed 200 OK in 1451ms (Views: 1450.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:28:48 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.6ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.0ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.6ms)
+Completed 200 OK in 1419ms (Views: 1417.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:29:19 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.1ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.3ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.6ms)
+Completed 200 OK in 1454ms (Views: 1452.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:29:28 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.0ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.2ms)
+Completed 200 OK in 1419ms (Views: 1418.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:29:42 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.5ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.0ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.0ms)
+Completed 200 OK in 1460ms (Views: 1459.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:29:51 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.6ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (2.8ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.3ms)
+Completed 200 OK in 1455ms (Views: 1453.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:30:10 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.4ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.7ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.6ms)
+Completed 200 OK in 1475ms (Views: 1473.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:30:25 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.0ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.4ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.0ms)
+Completed 200 OK in 1412ms (Views: 1410.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:31:03 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.2ms)
+  Rendered layouts/_nav_link.html.erb (9.6ms)
+  Rendered layouts/_header.html.erb (10.8ms)
+Completed 200 OK in 1440ms (Views: 1438.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:31:50 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (2.9ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.0ms)
+Completed 200 OK in 1438ms (Views: 1436.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:32:15 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.9ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.1ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (2.0ms)
+Completed 200 OK in 1430ms (Views: 1429.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:32:23 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.3ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.6ms)
+Completed 200 OK in 1450ms (Views: 1449.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:33:09 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.4ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.7ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.6ms)
+Completed 200 OK in 1427ms (Views: 1425.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-06 12:49:06 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.6ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (2.8ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (1.9ms)
+Completed 200 OK in 34ms (Views: 33.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-01-07 05:44:23 +0530
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EmployeesController#new as HTML
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 11ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 05:44:23 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (13.9ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (15.9ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (2.0ms)
+Completed 200 OK in 340ms (Views: 338.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/employeeportal/login" for 127.0.0.1 at 2018-01-07 05:44:47 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fz/PZXJoL/psQInTyU/IHgL3hcQ7+WHn4+aFVO3wwCy03Q4xvebBveOfnWKkQDrmo/JCFFFXiUDs2wNLbTGCDw==", "session"=>{"username"=>"krkrishnaraj11@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krkrishnaraj11@gmail.com"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 19ms (ActiveRecord: 1.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 05:44:47 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (3.0ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (5.2ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (2.2ms)
+Completed 200 OK in 69ms (Views: 67.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/employeeportal/login" for 127.0.0.1 at 2018-01-07 05:45:13 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"kpmoVY2NUUqf+8AKdBhFOu5I9ZZdUJ+SJlzfmEf/mNNZe2kBQgO/DRAk1LsZF7fCT00yRjf+dzUpYVmHxz7a8A==", "session"=>{"username"=>"krishnarajrnair", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krishnarajrnair"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/dashboard
+Completed 302 Found in 108ms (ActiveRecord: 0.9ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 05:45:13 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_nav_link.html.erb (1.4ms)
+  Rendered layouts/_header.html.erb (2.8ms)
+Completed 200 OK in 47ms (Views: 44.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:45:17 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.6ms)
+  Rendered employees/edit.html.erb within layouts/application (12.3ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.2ms)
+Completed 200 OK in 63ms (Views: 60.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:46:45 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.7ms)
+  Rendered employees/edit.html.erb within layouts/application (12.3ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.7ms)
+Completed 200 OK in 61ms (Views: 57.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:46:46 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.8ms)
+  Rendered employees/edit.html.erb within layouts/application (12.5ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.0ms)
+Completed 200 OK in 70ms (Views: 67.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 05:46:47 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.7ms)
+  Rendered layouts/_nav_link.html.erb (1.4ms)
+  Rendered layouts/_header.html.erb (2.9ms)
+Completed 200 OK in 58ms (Views: 54.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:46:48 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.6ms)
+  Rendered employees/edit.html.erb within layouts/application (8.9ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+Completed 200 OK in 62ms (Views: 59.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:49:40 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.5ms)
+  Rendered employees/edit.html.erb within layouts/application (9.5ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (2.4ms)
+Completed 200 OK in 64ms (Views: 61.0ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:50:08 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.6ms)
+  Rendered employees/edit.html.erb within layouts/application (11.2ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.2ms)
+Completed 200 OK in 66ms (Views: 63.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:51:08 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.5ms)
+  Rendered employees/edit.html.erb within layouts/application (7.8ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (1.9ms)
+Completed 200 OK in 1455ms (Views: 1453.0ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:51:28 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.6ms)
+  Rendered employees/edit.html.erb within layouts/application (11.4ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (2.7ms)
+Completed 200 OK in 1489ms (Views: 1487.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:51:52 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.5ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.4ms)
+  Rendered employees/edit.html.erb within layouts/application (9.2ms)
+  Rendered layouts/_nav_link.html.erb (1.4ms)
+  Rendered layouts/_header.html.erb (2.5ms)
+Completed 200 OK in 73ms (Views: 70.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:52:50 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.6ms)
+  Rendered employees/edit.html.erb within layouts/application (10.8ms)
+  Rendered layouts/_nav_link.html.erb (2.0ms)
+  Rendered layouts/_header.html.erb (3.1ms)
+Completed 200 OK in 59ms (Views: 56.5ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:53:31 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (1.3ms)
+  Rendered employees/edit.html.erb within layouts/application (11.7ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (2.8ms)
+Completed 200 OK in 1468ms (Views: 1465.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 05:53:37 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.5ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.3ms)
+Completed 200 OK in 52ms (Views: 49.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:53:41 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (23.6ms)
+  Rendered employees/edit.html.erb within layouts/application (37.4ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (1.9ms)
+Completed 200 OK in 95ms (Views: 91.6ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 05:53:43 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.7ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.8ms)
+Completed 200 OK in 62ms (Views: 59.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 05:54:07 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_nav_link.html.erb (2.5ms)
+  Rendered layouts/_header.html.erb (5.1ms)
+Completed 200 OK in 80ms (Views: 77.3ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 05:54:14 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.7ms)
+Completed 200 OK in 1414ms (Views: 1411.8ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:54:19 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.8ms)
+  Rendered employees/edit.html.erb within layouts/application (13.4ms)
+  Rendered layouts/_nav_link.html.erb (5.8ms)
+  Rendered layouts/_header.html.erb (7.1ms)
+Completed 200 OK in 73ms (Views: 70.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:54:42 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (1.2ms)
+  Rendered employees/edit.html.erb within layouts/application (16.5ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.1ms)
+Completed 200 OK in 1467ms (Views: 1464.6ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 05:56:00 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.6ms)
+  Rendered employees/edit.html.erb within layouts/application (10.2ms)
+  Rendered layouts/_nav_link.html.erb (1.3ms)
+  Rendered layouts/_header.html.erb (3.0ms)
+Completed 200 OK in 1467ms (Views: 1464.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 05:56:08 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.6ms)
+Completed 200 OK in 73ms (Views: 70.4ms | ActiveRecord: 0.2ms)
+
+
+Started DELETE "/employeeportal/logout" for 127.0.0.1 at 2018-01-07 05:56:11 +0530
+Processing by EmpSessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"izMYIjFIaWYAtKk2LWn63Ev1THl0TvSdI2v/G2aY17NA0dl2/saHIY9rvYdAZggk6vCLqR7gHDosVnkE5lmVkA=="}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 05:56:11 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (3.7ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (5.5ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (2.9ms)
+Completed 200 OK in 55ms (Views: 53.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:01:51 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.2ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (2.1ms)
+Completed 200 OK in 1493ms (Views: 1492.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:02:09 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.7ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.1ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.3ms)
+Completed 200 OK in 1487ms (Views: 1485.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:02:41 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.4ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (2.6ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.1ms)
+Completed 200 OK in 1470ms (Views: 1468.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:02:52 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.4ms)
+  Rendered layouts/_nav_link.html.erb (2.6ms)
+  Rendered layouts/_header.html.erb (5.2ms)
+Completed 200 OK in 74ms (Views: 72.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:02:54 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (7.5ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (8.7ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.7ms)
+Completed 200 OK in 97ms (Views: 94.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:03:32 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.5ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.9ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.5ms)
+Completed 200 OK in 1378ms (Views: 1377.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:03:57 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.5ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (2.8ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (2.0ms)
+Completed 200 OK in 1458ms (Views: 1456.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:05:10 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.1ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.9ms)
+Completed 200 OK in 1493ms (Views: 1491.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:05:50 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.5ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.9ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (2.7ms)
+Completed 200 OK in 1502ms (Views: 1501.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:06:35 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.6ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.4ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.3ms)
+Completed 200 OK in 1543ms (Views: 1541.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:07:30 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.9ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (4.3ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.9ms)
+Completed 200 OK in 1480ms (Views: 1479.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:07:41 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.8ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (2.7ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.5ms)
+Completed 200 OK in 1456ms (Views: 1454.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:08:15 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.3ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.9ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.9ms)
+Completed 200 OK in 1493ms (Views: 1491.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:08:46 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"NAAEt+WcSoX93WowdOjO1Oe2RXoTgxSAJjrHL4FLUKH/4sXjKhKkwnICfoEZ5zwsRrOCqnkt/CcpB0EwAYoSgg==", "session"=>{"username"=>"krishnarajrnair", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krishnarajrnair"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/dashboard
+Completed 302 Found in 83ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 06:08:46 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_nav_link.html.erb (1.3ms)
+  Rendered layouts/_header.html.erb (2.8ms)
+Completed 200 OK in 57ms (Views: 54.5ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 06:08:49 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.8ms)
+  Rendered employees/edit.html.erb within layouts/application (13.0ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.6ms)
+Completed 200 OK in 59ms (Views: 56.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 06:09:42 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.5ms)
+  Rendered employees/edit.html.erb within layouts/application (19.6ms)
+  Rendered layouts/_nav_link.html.erb (2.3ms)
+  Rendered layouts/_header.html.erb (4.2ms)
+Completed 200 OK in 101ms (Views: 99.0ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 06:09:45 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.9ms)
+Completed 200 OK in 59ms (Views: 56.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 06:09:47 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.8ms)
+  Rendered employees/edit.html.erb within layouts/application (22.1ms)
+  Rendered layouts/_nav_link.html.erb (0.9ms)
+  Rendered layouts/_header.html.erb (2.0ms)
+Completed 200 OK in 74ms (Views: 71.7ms | ActiveRecord: 0.2ms)
+
+
+Started DELETE "/employeeportal/logout" for 127.0.0.1 at 2018-01-07 06:09:48 +0530
+Processing by EmpSessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"Bi1cCtTX5p3CyAU87uBuS4DJ0DQl2EOW0UCDQp0vsZ/Nz51eG1kI2k0XEY2D75yzIcwX5E92qzHefQVdHe7zvA=="}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:09:48 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.9ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.0ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+Completed 200 OK in 43ms (Views: 41.5ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:14:09 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"kYbPB/xIGmjZ/eMVCHpLLopGxr5+6T+eUiCazzFeOtdaZA5TM8b0L1Yi96RldbnWK0MBbhRH1zldHRzQsZ949A==", "session"=>{"username"=>"krishnarajrnair", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krishnarajrnair"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 83ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:14:09 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (2.2ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (3.3ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.6ms)
+Completed 200 OK in 38ms (Views: 37.1ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:14:29 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"PRbq/76j+iPmm+83MkGi2Od6RUKH1cdD5ODITLyuGAv29CurcS0UZGlE+4ZfTlAgRn+Cku17L+Tr3U5TPG9aKA==", "session"=>{"username"=>"krishnarajrnair", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krishnarajrnair"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/dashboard
+Completed 302 Found in 83ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 06:14:29 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.5ms)
+  Rendered layouts/_nav_link.html.erb (1.5ms)
+  Rendered layouts/_header.html.erb (3.0ms)
+Completed 200 OK in 37ms (Views: 34.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 06:14:31 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.7ms)
+  Rendered employees/edit.html.erb within layouts/application (12.1ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (2.0ms)
+Completed 200 OK in 52ms (Views: 50.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 06:16:46 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.8ms)
+  Rendered employees/edit.html.erb within layouts/application (8.9ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (2.4ms)
+Completed 200 OK in 1437ms (Views: 1434.9ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/employeeportal" for 127.0.0.1 at 2018-01-07 06:17:10 +0530
+Processing by EmployeesController#edit as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering employees/edit.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.5ms)
+  Rendered employees/edit.html.erb within layouts/application (8.3ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.9ms)
+Completed 200 OK in 1467ms (Views: 1464.6ms | ActiveRecord: 0.2ms)
+
+
+Started DELETE "/employeeportal/logout" for 127.0.0.1 at 2018-01-07 06:17:17 +0530
+Processing by EmpSessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"NGhz7Tuitr1RxzsGO1a8q8W8rBwCFhfjEHNLY0PkqGD/irK59CxY+t4YL7dWWU5TZLlrzGi4/0QfTs18wyXqQw=="}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:17:17 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.6ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (2.5ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+Completed 200 OK in 52ms (Views: 50.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/admin/login" for 127.0.0.1 at 2018-01-07 06:17:19 +0530
+Processing by EmployeesController#adminlogin as HTML
+  Rendering employees/adminlogin.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (3.6ms)
+  Rendered employees/adminlogin.html.erb within layouts/application (5.6ms)
+  Rendered layouts/_nav_link.html.erb (0.7ms)
+  Rendered layouts/_header.html.erb (1.6ms)
+Completed 200 OK in 52ms (Views: 50.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/admin/login" for 127.0.0.1 at 2018-01-07 06:17:32 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"tsKTbuuex+IloruKzn+yiQMyrwmq1zMQjNja8+Yn1AR9IFI6JBAppap9rzujcEBxojdo2cB527eD5VzsZuaWJw==", "session"=>{"username"=>"krkrishnaraj11", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krkrishnaraj11"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/admin/dashboard
+Completed 302 Found in 87ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/admin/dashboard" for 127.0.0.1 at 2018-01-07 06:17:32 +0530
+Processing by EmployeesController#admindashboard as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/admindashboard.html.erb within layouts/application
+  Rendered employees/admindashboard.html.erb within layouts/application (1.0ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (2.6ms)
+Completed 200 OK in 41ms (Views: 38.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-07 06:17:39 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "employees"[0m
+  Rendered employees/employeetable.html.erb within layouts/application (11.7ms)
+  Rendered layouts/_nav_link.html.erb (1.9ms)
+  Rendered layouts/_header.html.erb (3.5ms)
+Completed 200 OK in 79ms (Views: 74.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-07 06:18:43 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.9ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "employees"[0m
+  Rendered employees/employeetable.html.erb within layouts/application (7.2ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.4ms)
+Completed 200 OK in 1463ms (Views: 1458.9ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-07 06:18:52 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "employees"[0m
+  Rendered employees/employeetable.html.erb within layouts/application (3.7ms)
+  Rendered layouts/_nav_link.html.erb (1.1ms)
+  Rendered layouts/_header.html.erb (2.2ms)
+Completed 200 OK in 1497ms (Views: 1493.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-07 06:19:03 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.5ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "employees"[0m
+  Rendered employees/employeetable.html.erb within layouts/application (5.9ms)
+  Rendered layouts/_nav_link.html.erb (1.3ms)
+  Rendered layouts/_header.html.erb (2.6ms)
+Completed 200 OK in 1467ms (Views: 1463.1ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-07 06:19:20 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "employees"[0m
+  Rendered employees/employeetable.html.erb within layouts/application (4.5ms)
+  Rendered layouts/_nav_link.html.erb (1.6ms)
+  Rendered layouts/_header.html.erb (3.5ms)
+Completed 200 OK in 1525ms (Views: 1521.1ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-07 06:19:33 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "employees"[0m
+  Rendered employees/employeetable.html.erb within layouts/application (4.2ms)
+  Rendered layouts/_nav_link.html.erb (2.2ms)
+  Rendered layouts/_header.html.erb (3.7ms)
+Completed 200 OK in 1545ms (Views: 1542.0ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-07 06:19:44 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "employees"[0m
+  Rendered employees/employeetable.html.erb within layouts/application (5.7ms)
+  Rendered layouts/_nav_link.html.erb (0.8ms)
+  Rendered layouts/_header.html.erb (1.8ms)
+Completed 200 OK in 1420ms (Views: 1416.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/admin/employee" for 127.0.0.1 at 2018-01-07 06:20:01 +0530
+Processing by EmployeesController#employeetable as HTML
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/employeetable.html.erb within layouts/application
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" LIMIT ? OFFSET ?[0m  [["LIMIT", 2], ["OFFSET", 0]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "employees"[0m
+  Rendered employees/employeetable.html.erb within layouts/application (3.9ms)
+  Rendered layouts/_nav_link.html.erb (1.6ms)
+  Rendered layouts/_header.html.erb (2.7ms)
+Completed 200 OK in 1463ms (Views: 1460.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/admin/addemployee" for 127.0.0.1 at 2018-01-07 06:20:07 +0530
+Processing by EmployeesController#addemployee as HTML
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering employees/addemployee.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (0.8ms)
+  Rendered employees/addemployee.html.erb within layouts/application (12.2ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.1ms)
+Completed 200 OK in 54ms (Views: 51.2ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/admin/addemployee" for 127.0.0.1 at 2018-01-07 06:20:48 +0530
+Processing by EmployeesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"ijK3n/d++A3kX0aOQm5E8BH3wpSxEMkEZGNb4GTvdlmsvcpnNRAzK0EIR++bJp0paPi/I2vnEhl/7kPPHDYCsQ==", "employee"=>{"name"=>"Nikhil  D Anand", "gender"=>"Male", "designation"=>"Full Stack ROR Developer", "phone"=>"", "email"=>"", "date_of_join"=>"", "date_of_birth"=>"", "address"=>"", "active"=>"0", "username"=>"", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Add Employee"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mEmployee Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."phone" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE LOWER("employees"."email") = LOWER(?) LIMIT ?[0m  [["email", ""], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  Rendering employees/addemployee.html.erb within layouts/application
+  Rendered shared/_error_messages.html.erb (1.2ms)
+  Rendered employees/addemployee.html.erb within layouts/application (6.9ms)
+  Rendered layouts/_nav_link.html.erb (1.0ms)
+  Rendered layouts/_header.html.erb (2.7ms)
+Completed 200 OK in 60ms (Views: 45.2ms | ActiveRecord: 0.8ms)
+
+
+Started DELETE "/admin/logout" for 127.0.0.1 at 2018-01-07 06:20:54 +0530
+Processing by EmpSessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"qEuP7IA45yX9q1kRxcNTky92eLXHOY5fSmbR0GDuyBBjqU64T7YJYnJ0TaCozKFrjnO/Za2XZvhFW1fP4C+KMw=="}
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 2ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:20:54 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.9ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (2.8ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.6ms)
+Completed 200 OK in 35ms (Views: 33.7ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:22:01 +0530
+Processing by EmpSessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"QLo8tWKbffzvimrplLlAFfJVIWnxrCUlpe8DSejHcHGLWP3hrRWTu2BVflj5trLtU1DmuZsCzYKq0oVWaAYyUg==", "session"=>{"username"=>"krishnarajrnair", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."username" = ? LIMIT ?[0m  [["username", "krishnarajrnair"], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/dashboard
+Completed 302 Found in 85ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 06:22:01 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.5ms)
+  Rendered layouts/_nav_link.html.erb (2.0ms)
+  Rendered layouts/_header.html.erb (3.0ms)
+Completed 200 OK in 1491ms (Views: 1489.0ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 06:22:36 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_nav_link.html.erb (1.8ms)
+  Rendered layouts/_header.html.erb (3.5ms)
+Completed 200 OK in 1451ms (Views: 1448.0ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 06:23:03 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.5ms)
+  Rendered layouts/_nav_link.html.erb (1.2ms)
+  Rendered layouts/_header.html.erb (2.5ms)
+Completed 200 OK in 1494ms (Views: 1492.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 06:23:28 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.7ms)
+  Rendered layouts/_nav_link.html.erb (1.7ms)
+  Rendered layouts/_header.html.erb (2.7ms)
+Completed 200 OK in 1407ms (Views: 1404.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/employeeportal/dashboard" for 127.0.0.1 at 2018-01-07 06:24:21 +0530
+Processing by EmpSessionsController#show as HTML
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering emp_sessions/show.html.erb within layouts/application
+  Rendered emp_sessions/show.html.erb within layouts/application (0.6ms)
+  Rendered layouts/_nav_link.html.erb (1.6ms)
+  Rendered layouts/_header.html.erb (3.0ms)
+Completed 200 OK in 1527ms (Views: 1520.8ms | ActiveRecord: 0.3ms)
+
+
+Started DELETE "/employeeportal/logout" for 127.0.0.1 at 2018-01-07 06:24:31 +0530
+Processing by EmpSessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"f1nx/wIO8R/ymXPtJBmv69NRTMzLmg+Id3EF/6ToRzq0uzCrzYAfWH1GZ1xJFl0TclSLHKE05y94TIPgJCkFGQ=="}
+  [1m[36mEmployee Load (0.4ms)[0m  [1m[34mSELECT  "employees".* FROM "employees" WHERE "employees"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+Redirected to http://localhost:3000/employeeportal/login
+Completed 302 Found in 3ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/employeeportal/login" for 127.0.0.1 at 2018-01-07 06:24:31 +0530
+Processing by EmpSessionsController#new as HTML
+  Rendering emp_sessions/new.html.erb within layouts/application
+  Rendered layouts/_login.html.erb (1.6ms)
+  Rendered emp_sessions/new.html.erb within layouts/application (2.6ms)
+  Rendered layouts/_nav_link.html.erb (0.6ms)
+  Rendered layouts/_header.html.erb (1.7ms)
+Completed 200 OK in 37ms (Views: 36.5ms | ActiveRecord: 0.0ms)
+
+
