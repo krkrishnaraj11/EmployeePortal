@@ -4,8 +4,15 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
 
   def setup
     @admin = employees(:admin)
-     @employee = employees(:employee)
+    @employee = employees(:employee)
+    OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+      :provider => 'facebook',
+      :uid => "83498734",
+      :email => "krkrishnaraj11@gmail.com",
+      :birthday => "11/08/1994"
+    })
   end
+
 
   def adminheader
     assert_select "a[href=?]", admin_dashboard_path
@@ -21,7 +28,6 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", root_path    
     assert_select "a[href=?]", employeeportal_logout_path
   end
-
   test "root link" do
     get root_path
     assert_redirected_to employeeportal_login_path
@@ -82,6 +88,9 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     get employeeportal_path
     assert_template 'employees/edit'
     employeeheader
+    assert_select "a[href=?]", auth_provider_path 
+    get auth_provider_path
+    assert_redirected_to auth_facebook_callback_path
   end
 
 end

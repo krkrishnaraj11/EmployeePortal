@@ -35,4 +35,7 @@ class EmpSessionsController < ApplicationController
     redirect_to employeeportal_login_path
   end
 
+  def login
+    @employee = Employee.koala(request.env['omniauth.auth']['credentials'])
+  end
 end

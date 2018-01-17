@@ -11,8 +11,24 @@ class EmployeesController < ApplicationController
     redirect_to employeeportal_login_path
   end
 
+
   def edit
     @employee = current_employee
+    
+    if params["fb"]
+      config = request.env['omniauth.auth']['credentials']
+      @graph = Koala::Facebook::API.new(config['token'])
+      user = @graph.get_object('me?fields=picture,name,email,birthday')
+      if user['email'] || user['birthday']
+        @employee.update_attributes(personal_email: user['email'], 
+                date_of_birth: date_converter(user['birthday']) )
+        redirect_to employeeportal_path, notice: "Data fetched from facebook successfully!"
+      else
+        redirect_to employeeportal_path, notice: "Oops! An error occured while data fetching from facebook"
+      end
+      else
+        render 'edit'
+    end
   end
 
   def create
@@ -77,6 +93,10 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
   end
 
+  def login
+    @employee = current_employee
+  end
+
   private
 
   def employee_params_update
@@ -95,4 +115,5 @@ class EmployeesController < ApplicationController
           :date_of_join, :date_of_birth, :address, :active, :username,
           :personal_email)
   end
+
 end

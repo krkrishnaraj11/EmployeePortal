@@ -3,6 +3,10 @@ require 'test_helper'
 class EmployeesEditTest < ActionDispatch::IntegrationTest
   def setup
     @employee = employees(:employee)
+    OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+    :provider => 'facebook',
+    :uid => "83498734"
+    })
   end
 
   test "unsuccessful edit" do

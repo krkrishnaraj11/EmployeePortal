@@ -28,12 +28,27 @@ class Employee < ApplicationRecord
     VALID_PASSWORD_REGEX = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*[\W])(?=.*[\d])[\S]{8,15}\z/
     validates :password, format: { with: VALID_PASSWORD_REGEX }, allow_nil: true
 
+    #Facebook Koala Token
+    def self.koala(auth)
+        access_token = auth['token']
+        facebook = Koala::Facebook::API.new(access_token)
+        facebook.get_object("me?fields=name")
+    end
+    
     # Returns the hash digest of the given string.
     def Employee.digest(string)
         cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                     BCrypt::Engine.cost
         BCrypt::Password.create(string, cost: cost)
     end
+
+    #Koala Facebook Oauth
+    def self.koala(auth)
+        access_token = auth['token']
+        facebook = Koala::Facebook::API.new(access_token)
+        facebook.get_object("me?fields=name,picture")
+    end
+
 
     # Returns a random token.
     def Employee.new_token
@@ -57,4 +72,5 @@ class Employee < ApplicationRecord
         update_attribute(:remember_digest, nil)
     end
 
+    
 end
